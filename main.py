@@ -14,9 +14,9 @@ requirements_install = [
     "gTTS",
     "kurigram",
     "lyricsgenius",
-    "--upgrade",
-    "--break-system-packages"
+    "--upgrade"
 ]
+
 
 def check_structure():
     if not os.path.exists("temp"):
