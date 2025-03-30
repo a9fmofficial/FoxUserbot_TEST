@@ -14,7 +14,8 @@ requirements_install = [
     "gTTS",
     "kurigram",
     "lyricsgenius",
-    "--upgrade"
+    "--upgrade",
+    "--break-system-packages"
 ]
 
 
