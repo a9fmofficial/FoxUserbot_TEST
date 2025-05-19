@@ -40,6 +40,7 @@ def get_text():
 @Client.on_message(filters.command('help', prefixes=my_prefix()) & filters.me)
 async def helps(client, message):
     try:
+        await message.delete()
         da = await client.send_photo(message.chat.id, "https://raw.githubusercontent.com/FoxUserbot/FoxUserbot/refs/heads/main/logo_banner.png",caption="Loading the help menu. Please, wait...")
         await client.edit_message_caption(message.chat.id, da.id, get_text())
     except ChatSendPhotosForbidden:
