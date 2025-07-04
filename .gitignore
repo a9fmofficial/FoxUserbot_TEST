@@ -5,3 +5,5 @@ config.ini
 .vscode/
 modules/plugins_2custom
 my_account.session-journal
+firstlaunch.temp
+temp/

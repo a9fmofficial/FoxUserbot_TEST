@@ -67,9 +67,16 @@ module_list['Example'] = f'{my_prefix()}example_edit'
 file_list['Example'] = 'example.py'
 ```
 
+<h2>How to add Hikka/Heroku modules?</h2>
+
+To add modules from Hikka/Heroku, there is a special compatibility layer called <b>Wine Hikka</b>. To use it, download the module file itself from the <a href='https://github.com/FoxUserbot/Modules'>modules repository</a> and reply to the Hikka module with <code>[prefix]wine_hikka</code> or <code>[prefix]wine_hikka [link]</code>.
+
+AI will automatically convert the module from Telethon to Pyrogram for this UserBot, save it in the <code>modules/plugins_2custom/</code> folder and restart it.
+
+<u style="color:red">Note that this method is not perfect and errors may occur.</u>
+
 <h1>Install and Start</h1>
 <h2>How to install?</h2>
-
 
 - Termux
 
