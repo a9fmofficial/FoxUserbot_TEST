@@ -14,6 +14,7 @@ requirements_install = [
     "gTTS",
     "kurigram",
     "lyricsgenius",
+    "flask",
     "--upgrade",
     "--break-system-packages"
 ]
@@ -29,7 +30,7 @@ def check_structure():
 def autoupdater():
     # Check pyrogram and kurigram
     try:
-        from pyrogram import Client
+        from pyrogram.client import Client
     except ImportError:
         try:
             os.remove("firstlaunch.temp")
@@ -64,14 +65,51 @@ def logger():
     )
 
 
+async def start_userbot(app):
+    await app.start()
+    user = await app.get_me()
+    import sys
+    session_file = "my_account.session"
+    if os.path.exists(session_file):
+        print("📝 Logging: Session already exists, restart not required")
+    else:
+        print("📝 Logging: First authorization, restarting main script")
+        os.remove("nohup.out")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+
+
 def userbot():
-    from pyrogram import Client
+    from pyrogram.client import Client
     from configurator import my_api
     from prestarter import prestart
+    from web_auth.web_auth import start_web_auth
+    import os
+    import sys
+    import asyncio
+    
     api_id, api_hash, device_mod = my_api()
+
+    if not os.path.exists("my_account.session"):
+        print("🦊 First launch! Authorization required...")        
+        success, user = start_web_auth(api_id, api_hash, device_mod)
+        
+        if not success or user is None:
+            print("❌ Authorization failed!")
+            return
+        else:
+            if not os.path.exists("my_account.session"):
+                print("📝 Restarting...")
+                os.remove("nohup.out")
+                os.execv(sys.executable, [sys.executable] + sys.argv)
+                
+            else:
+                print("🦊 Session already exists, authorization not required")
+    else:
+        print("🦊 Session already exists, authorization not required")
+    
     prestart(api_id, api_hash, device_mod)
 
-    Client = Client(
+    client = Client(
         "my_account",
         api_id=api_id,
         api_hash=api_hash,
