@@ -3,10 +3,29 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import sys
 import os
+import asyncio
 
 
 def prestart(api_id, api_hash, device_mod):
+    from pyrogram.client import Client
+    import asyncio
+
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+    
     app = Client("my_account", api_id=api_id, api_hash=api_hash, device_model=device_mod)
+    print("📝 Логирование: Проверка подключения к Telegram")
+    
+    async def check_connection():
+        await app.connect()
+        print("📝 Логирование: Подключение успешно")
+        await app.disconnect()
+        print("📝 Логирование: Отключение после проверки")
+    
+    loop.run_until_complete(check_connection())
     with app:
         if len(sys.argv) == 4:
             restart_type = sys.argv[3]
